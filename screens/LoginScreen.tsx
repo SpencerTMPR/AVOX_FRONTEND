@@ -28,7 +28,7 @@ export default function LoginScreen({ navigation }: any) {
     <ScrollView contentContainerStyle={styles.container}>
       {/* Logo */}
       <Image 
-        source={require('../../assets/images/logo.jpeg')} 
+        source={require('../../assets/images/logo.png')} 
         style={styles.logo} 
         resizeMode="contain"
       />
