@@ -2,13 +2,13 @@
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import {
-    Image,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 
 export default function Page4Screen() {
@@ -72,7 +72,17 @@ export default function Page4Screen() {
         onChangeText={setCorreo}
       />
 
-      <Text style={styles.label}>Ubicacion</Text>
+      <Text style={styles.label}>Direccion</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Value"
+        placeholderTextColor="#B0B0B0"
+        keyboardType="phone-pad"
+        value={telefono}
+        onChangeText={setTelefono}
+      />
+
+      <Text style={styles.label}>Ciudad</Text>
       <TextInput
         style={styles.input}
         placeholder="Value"

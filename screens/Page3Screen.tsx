@@ -2,13 +2,13 @@
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import {
-    Image,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 
 export default function Page3Screen() {
@@ -18,6 +18,7 @@ export default function Page3Screen() {
   const [apellido, setApellido] = useState('');
   const [correo, setCorreo] = useState('');
   const [telefono, setTelefono] = useState('');
+    const [contraseña, setContraseña] = useState('');
   const [aceptaTerminos, setAceptaTerminos] = useState(false);
 
   const handleCrearCuenta = () => {
@@ -70,6 +71,16 @@ export default function Page3Screen() {
         keyboardType="email-address"
         value={correo}
         onChangeText={setCorreo}
+      />
+
+      <Text style={styles.label}>Contraseña</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Value"
+        placeholderTextColor="#B0B0B0"
+        keyboardType="email-address"
+        value={correo}
+        onChangeText={setContraseña}
       />
 
       <Text style={styles.label}>Teléfono</Text>
