@@ -29,7 +29,7 @@ export default function Page4Screen() {
     console.log('Creando cuenta con:', { nombre, apellido, correo, telefono });
     // Aquí iría tu lógica de registro (API, validaciones, etc.)
     // Al completar correctamente, navegar a la pantalla de éxito
-    router.push('/page5');
+    router.push('/page15');
   };
 
   return (
