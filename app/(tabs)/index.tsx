@@ -1,15 +1,17 @@
+import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
-import { 
-  View, 
-  Text, 
-  TextInput, 
-  TouchableOpacity, 
-  Image, 
-  StyleSheet, 
-  ScrollView 
+import {
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View
 } from 'react-native';
 
-export default function LoginScreen({ navigation }: any) {
+export default function LoginScreen() {
+  const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -56,7 +58,7 @@ export default function LoginScreen({ navigation }: any) {
       />
 
       {/* Botón principal */}
-      <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
+      <TouchableOpacity style={styles.loginButton} onPress={() => router.push('/')}>
         <Text style={styles.loginText}>Continuar</Text>
       </TouchableOpacity>
 
@@ -73,7 +75,7 @@ export default function LoginScreen({ navigation }: any) {
         <Text style={styles.registerSubtitle}>
           Ingresa tu correo electrónico para registrarte en esta aplicación
         </Text>
-        <TouchableOpacity style={styles.registerButton} onPress={handleRegister}>
+        <TouchableOpacity style={styles.registerButton} onPress={() => router.push('/page2')}>
           <Text style={styles.registerText}>Crear Cuenta</Text>
         </TouchableOpacity>
       </View>
@@ -88,6 +90,7 @@ export default function LoginScreen({ navigation }: any) {
   );
 }
 
+// Tus estilos (sin cambios)
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
@@ -98,20 +101,20 @@ const styles = StyleSheet.create({
     paddingHorizontal: 25,
   },
   logo: {
-    width: 120,
-    height: 120,
-    marginBottom: 10,
+    width: 250,
+    height: 250,
+    marginBottom: 0,
   },
   title: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#000',
-    marginBottom: 20,
+    color: '#023554',
+    marginBottom: 10,
   },
   input: {
     width: '100%',
     height: 45,
-    borderColor: '#B0B0B0',
+    borderColor: '#8AD2EA',
     borderWidth: 1,
     borderRadius: 8,
     paddingHorizontal: 15,
@@ -122,14 +125,14 @@ const styles = StyleSheet.create({
   loginButton: {
     width: '100%',
     height: 45,
-    backgroundColor: '#002B45',
+    backgroundColor: '#023554',
     borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 25,
   },
   loginText: {
-    color: '#FFF',
+    color: '#8AD2EA',
     fontWeight: '600',
     fontSize: 15,
   },
@@ -156,7 +159,7 @@ const styles = StyleSheet.create({
   registerTitle: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#000',
+    color: '#023554',
     marginBottom: 5,
   },
   registerSubtitle: {
@@ -166,12 +169,14 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   registerButton: {
-    width: '100%',
+    width: 330,
     height: 45,
-    backgroundColor: '#A7D7E9',
+    backgroundColor: '#8AD2EA',
     borderRadius: 8,
+    borderColor: '#023554',
     alignItems: 'center',
     justifyContent: 'center',
+    borderWidth: 1.5,
   },
   registerText: {
     color: '#002B45',

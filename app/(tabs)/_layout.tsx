@@ -30,6 +30,42 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
         }}
       />
+
+      <Tabs.Screen
+        name="page1"
+        options={{
+          title: 'Página 1',
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="1.circle.fill" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="page2"
+        options={{
+          title: 'Página 2',
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="2.circle.fill" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="page3"
+        options={{
+          title: 'Página 3',
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="3.circle.fill" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="page4"
+        options={{
+          title: 'Página 4',
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="4.circle.fill" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="page5"
+        options={{
+          title: 'Página 5',
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="5.circle.fill" color={color} />,
+        }}
+      />
     </Tabs>
   );
 }
