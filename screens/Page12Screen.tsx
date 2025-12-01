@@ -2,11 +2,11 @@ import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import {
-  Image,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
+    Image,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
 } from 'react-native';
 
 export default function Page5Screen() {
@@ -22,7 +22,7 @@ export default function Page5Screen() {
       />
 
       {/* Título */}
-      <Text style={styles.title}>Registro Exitoso</Text>
+      <Text style={styles.title}>Reserva Exitoso</Text>
 
       {/* Icono de check grande */}
       <View style={styles.checkContainer}>
@@ -30,8 +30,8 @@ export default function Page5Screen() {
       </View>
 
       {/* Mensaje */}
-      <Text style={styles.messageTitle}>Verifica tu Correo</Text>
-      <Text style={styles.messageTitle}>Electrónico</Text>
+      <Text style={styles.messageTitle}>La reserva se agendado</Text>
+      <Text style={styles.messageTitle}>correctamente</Text>
 <br /><br /><br /><br /><br />
       {/* Botón Regresar al Login */}
 
@@ -46,7 +46,7 @@ export default function Page5Screen() {
       <TouchableOpacity
         onPress={() => navigation.navigate('page6' as never)}
       >
-        <Text style={styles.loginText}>Pagina Principal</Text>
+        <Text style={styles.loginText}>Regresar a la pagina principal</Text>
       </TouchableOpacity>
     </View>
   );

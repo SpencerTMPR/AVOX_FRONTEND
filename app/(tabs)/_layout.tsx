@@ -23,39 +23,45 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
         }}
       />
-
-      <Tabs.Screen
-        name="page1"
-        options={{
-          title: 'Página 1',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="1.circle.fill" color={color} />,
-        }}
-      />
       <Tabs.Screen
         name="page2"
         options={{
-          title: 'Página 2',
+          title: '2',
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="2.circle.fill" color={color} />,
         }}
       />
       <Tabs.Screen
         name="page3"
         options={{
-          title: 'Página 3',
+          title: '3',
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="3.circle.fill" color={color} />,
         }}
       />
       <Tabs.Screen
         name="page4"
         options={{
-          title: 'Página 4',
+          title: '4',
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="4.circle.fill" color={color} />,
         }}
       />
       <Tabs.Screen
         name="page5"
         options={{
-          title: 'Página 5',
+          title: '5',
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="5.circle.fill" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="page6"
+        options={{
+          title: '6',
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="5.circle.fill" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="page7"
+        options={{
+          title: '7',
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="5.circle.fill" color={color} />,
         }}
       />

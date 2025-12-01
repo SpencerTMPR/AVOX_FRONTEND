@@ -1,4 +1,5 @@
 
+import { Feather } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import {
@@ -34,9 +35,14 @@ export default function Page3Screen() {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <TouchableOpacity style={styles.back} onPress={() => router.back()}>
-        <Text style={styles.backText}>Back</Text>
-      </TouchableOpacity>
+      <TouchableOpacity
+                style={styles.backButton}
+                onPress={() => router.push('/page2')} // ← vuelve a la pantalla anterior
+                // Si quieres ir a una pantalla específica, cambia por:
+                // onPress={() => router.push('/locales')}
+            >
+                <Feather name="arrow-left" size={28} color='#023554' />
+            </TouchableOpacity>
       {/* Logo AVOX */}
       <Image
         source={require('../assets/images/logo.jpeg')}
@@ -149,7 +155,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 45,
     borderColor: '#8AD2EA',
-    borderWidth: 1.5,
+    borderWidth: 2,
     borderRadius: 10,
     paddingHorizontal: 15,
     fontSize: 15,
@@ -204,13 +210,29 @@ const styles = StyleSheet.create({
     borderColor: '#023554',
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 1.5,
+    borderWidth: 2,
   },
   crearText: {
     color: '#002B45',
     fontWeight: '600',
     fontSize: 15,
   },
+  backButton: {
+        position: 'absolute',
+        top: 50,        // justo debajo del notch/status bar
+        left: 45,
+        zIndex: 10,
+        backgroundColor: '#fff',
+        padding: 4,
+        borderRadius: 20,
+        elevation: 3,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+        borderColor: '#023554',
+        borderWidth:2,
+    },
 });
 
 
