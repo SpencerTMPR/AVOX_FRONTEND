@@ -50,7 +50,7 @@ export default function Page11Screen() {
             {/* 1. Flecha de Retroceso Absoluta (Se mantiene el estilo flotante) */}
             <TouchableOpacity
                 style={styles.backButton}
-                onPress={() => router.back()}
+                onPress={() => router.push('/page9')}
             >
                 <Feather name="arrow-left" size={28} color={PRIMARY_BLUE} />
             </TouchableOpacity>

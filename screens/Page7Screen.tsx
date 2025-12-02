@@ -160,6 +160,6 @@ const styles = StyleSheet.create({
   cardDesc: { fontSize: 12, color: '#023554', marginBottom: 10, lineHeight: 16 },
   cardPrice: { fontSize: 18, fontWeight: '800', color: '#023554' },
   footerContainer: { position: 'absolute', bottom: 20, left: 0, right: 0, alignItems: 'center', justifyContent: 'center' },
-  nextButton: { width: width * 0.5, backgroundColor: '#8AD2EA', paddingVertical: 12, borderRadius: 12, borderWidth: 2, borderColor: '#023554', alignItems: 'center', shadowColor: '', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.2, elevation: 3 },
+  nextButton: { width:200, backgroundColor: '#8AD2EA', paddingVertical: 12, borderRadius: 12, borderWidth: 2, borderColor: '#023554', alignItems: 'center', shadowColor: '', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.2, elevation: 3 },
   nextButtonText: { fontSize: 16, fontWeight: '600', color: '#023554' },
 });
