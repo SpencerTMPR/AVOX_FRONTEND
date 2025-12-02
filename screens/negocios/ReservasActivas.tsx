@@ -224,7 +224,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     completeButtonText: {
-        color: '#fff',
+        color: SECONDARY_CYAN,
         fontSize: 14,
         fontWeight: '600',
     },
