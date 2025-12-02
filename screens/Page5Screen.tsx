@@ -1,13 +1,7 @@
-import { Ionicons } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
-import React from 'react';
-import {
-  Image,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
+import React from "react";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 export default function Page5Screen() {
   const navigation = useNavigation();
@@ -16,13 +10,13 @@ export default function Page5Screen() {
     <View style={styles.container}>
       {/* Logo AVOX */}
       <Image
-        source={require('../assets/images/logo.jpeg')}
+        source={require("../assets/images/logo.jpeg")}
         style={styles.logo}
         resizeMode="contain"
       />
 
       {/* Título */}
-      <Text style={styles.title}>Registro Exitoso</Text>
+      <Text style={styles.loginText}>Registro Exitoso</Text>
 
       {/* Icono de check grande */}
       <View style={styles.checkContainer}>
@@ -30,22 +24,27 @@ export default function Page5Screen() {
       </View>
 
       {/* Mensaje */}
-      <Text style={styles.messageTitle}>Verifica tu Correo</Text>
-      <Text style={styles.messageTitle}>Electrónico</Text>
-<br /><br /><br /><br /><br />
+      <Text style={styles.loginText}>Verifica tu Correo</Text>
+      <Text style={styles.loginText}>Electrónico</Text>
+      <View style={{ height: 20 }} />
+      <View style={{ height: 20 }} />
+      <View style={{ height: 20 }} />
+      <View style={{ height: 20 }} />
+      <View style={{ height: 20 }} />
+      <View style={{ height: 20 }} />
+      <View style={{ height: 20 }} />
+
       {/* Botón Regresar al Login */}
 
-{/* Icono Home opcional (si quieres que sea clickeable también) */}
+      {/* Icono Home opcional (si quieres que sea clickeable también) */}
       <TouchableOpacity
         style={styles.homeIcon}
-        onPress={() => navigation.navigate('page6' as never)}
+        onPress={() => navigation.navigate("page6" as never)}
       >
         <Ionicons name="home-outline" size={32} color="#023554" />
       </TouchableOpacity>
 
-      <TouchableOpacity
-        onPress={() => navigation.navigate('page6' as never)}
-      >
+      <TouchableOpacity onPress={() => navigation.navigate("page6" as never)}>
         <Text style={styles.loginText}>Pagina Principal</Text>
       </TouchableOpacity>
     </View>
@@ -55,9 +54,9 @@ export default function Page5Screen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#FFFFFF",
+    alignItems: "center",
+    justifyContent: "center",
     paddingHorizontal: 40,
   },
   logo: {
@@ -67,45 +66,45 @@ const styles = StyleSheet.create({
   },
   avoxTitle: {
     fontSize: 34,
-    fontWeight: 'bold',
-    color: '#023554',
+    fontWeight: "bold",
+    color: "#023554",
     marginBottom: 50,
   },
   title: {
     fontSize: 26,
-    color: '#023554',
+    color: "#023554",
     marginBottom: 40,
-    fontWeight:'400',
+    fontWeight: "400",
     lineHeight: 0,
-    letterSpacing:0,
+    letterSpacing: 0,
   },
   checkContainer: {
     marginBottom: 50,
   },
   messageTitle: {
     fontSize: 24,
-    color: '#023554',
+    color: "#023554",
     marginBottom: 40,
-    fontWeight:'400',
+    fontWeight: "400",
     lineHeight: 0,
-    letterSpacing:0,
+    letterSpacing: 0,
   },
   loginButton: {
     marginTop: 40,
-    width: '100%',
+    width: "100%",
     height: 55,
-    backgroundColor: '#023554',
+    backgroundColor: "#023554",
     borderRadius: 12,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   loginText: {
-    color: '#023554',
+    color: "#023554",
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   homeIcon: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 130,
   },
 });
