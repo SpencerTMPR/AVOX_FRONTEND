@@ -1,7 +1,9 @@
-import { Ionicons } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
-import React, { useState } from 'react';
+import { Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
+import React, { useContext, useEffect, useState } from "react";
 import {
+  ActivityIndicator,
   FlatList,
   Image,
   SafeAreaView,
@@ -10,69 +12,90 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  View
-} from 'react-native';
+  View,
+} from "react-native";
+import { RootStackParamList } from "../app/navigation/types";
+import API from "../constants/api";
+import { UserContext } from "../context/UserContext";
 
-// Datos de ejemplo para simular los carwash de la imagen
-const CARWASH_DATA = [
-  {
-    id: '1',
-    name: 'Eco Wash',
-    location: 'Las Lomas',
-    // Usamos placeholder images. Reemplaza uri con require('../../assets/...')
-    image: require('../assets/images/logo.jpeg'),
-  },
-  {
-    id: '2',
-    name: 'WashCar',
-    location: 'Las Lomas',
-    image: require('../assets/images/logo.jpeg'),
-  },
-  {
-    id: '3',
-    name: 'Carwash Camilo',
-    location: 'Las Lomas',
-    image: require('../assets/images/logo.jpeg'),
-  },
-  {
-    id: '4',
-    name: 'CarWash & Spa',
-    location: 'Las Lomas',
-    image: require('../assets/images/logo.jpeg'),
-  },
-];
+// 🔹 Tipo para cada autolavado (según tu backend)
+type Carwash = {
+  autolavadoID: number;
+  nombre: string;
+  direccion: string;
+  ciudad: string;
+  latitud: number;
+  longitud: number;
+};
+
+type Page6NavProp = StackNavigationProp<RootStackParamList, "page6">;
 
 export default function Page6Screen() {
-  const navigation = useNavigation();
-  const [search, setSearch] = useState('');
+  const navigation = useNavigation<Page6NavProp>();
+  const [search, setSearch] = useState("");
+  const [carwashes, setCarwashes] = useState<Carwash[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  const { usuario } = useContext(UserContext);
+
+  useEffect(() => {
+    console.log("Usuario desde contexto:", usuario);
+
+    const cargarAutolavados = async () => {
+      try {
+        const response = await API.get("/api/autolavados/disponibles");
+        setCarwashes(response.data);
+      } catch (error) {
+        console.error("Error al cargar autolavados:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    cargarAutolavados();
+  }, [usuario]);
+
+  const saludo = usuario
+    ? `Bienvenido ${usuario.nombre}`
+    : "Bienvenido invitado";
 
   // Componente para renderizar cada tarjeta (Card)
-  const renderItem = ({ item }) => (
+  const renderItem = ({ item }: { item: Carwash }) => (
     <TouchableOpacity
       style={styles.cardContainer}
-      onPress={() => navigation.navigate('page7' as never)}
+      onPress={() =>
+        navigation.navigate("page7", {
+          autolavadoID: item.autolavadoID,
+        })
+      }
     >
       <View style={styles.cardImageContainer}>
         <Image
-          source={item.image}
+          source={require("../assets/images/logo.jpeg")} // placeholder por ahora
           style={styles.cardImage}
           resizeMode="contain"
         />
       </View>
-      <Text style={styles.cardLocation}>{item.location}</Text>
-      <Text style={styles.cardTitle}>{item.name}</Text>
+      <Text style={styles.cardLocation}>{item.ciudad}</Text>
+      <Text style={styles.cardTitle}>{item.nombre}</Text>
     </TouchableOpacity>
   );
 
   return (
     <SafeAreaView style={styles.safeArea}>
       <StatusBar barStyle="dark-content" />
-      
+
       <View style={styles.container}>
         {/* Header: Barra de Búsqueda */}
         <View style={styles.headerContainer}>
+          <Text style={styles.sectionTitle}>{saludo}</Text>
           <View style={styles.searchBar}>
-            <Ionicons name="search-outline" size={20} color="#B0B0B0" style={styles.searchIcon} />
+            <Ionicons
+              name="search-outline"
+              size={20}
+              color="#B0B0B0"
+              style={styles.searchIcon}
+            />
             <TextInput
               style={styles.searchInput}
               placeholder="Buscar"
@@ -88,7 +111,7 @@ export default function Page6Screen() {
           <Text style={styles.sectionTitle}>Locales disponibles</Text>
           <View style={styles.tagsContainer}>
             <TouchableOpacity style={styles.tagButton}>
-              <Text style={styles.tagText}>Locacion</Text>
+              <Text style={styles.tagText}>Locación</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.tagButton}>
               <Text style={styles.tagText}>Reseñas</Text>
@@ -97,27 +120,43 @@ export default function Page6Screen() {
         </View>
 
         {/* Lista de Carwash (Grid) */}
-        <FlatList
-          data={CARWASH_DATA}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id}
-          numColumns={2} // Para hacer las 2 columnas
-          columnWrapperStyle={styles.row} // Estilo para separar columnas
-          contentContainerStyle={styles.listContent}
-          showsVerticalScrollIndicator={false}
-        />
+        {loading ? (
+          <ActivityIndicator size="large" color="#023554" />
+        ) : carwashes.length === 0 ? (
+          <Text style={{ textAlign: "center", marginTop: 20 }}>
+            No hay autolavados disponibles
+          </Text>
+        ) : (
+          <FlatList
+            data={carwashes.filter((c) =>
+              c.nombre.toLowerCase().includes(search.toLowerCase())
+            )}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.autolavadoID.toString()}
+            numColumns={2}
+            columnWrapperStyle={styles.row}
+            contentContainerStyle={styles.listContent}
+            showsVerticalScrollIndicator={false}
+          />
+        )}
 
         {/* Barra de Navegación Inferior (Footer) */}
         <View style={styles.bottomNav}>
-          <TouchableOpacity onPress={() => navigation.navigate('page6' as never)}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("page6" as never)}
+          >
             <Ionicons name="home" size={28} color="#023554" />
           </TouchableOpacity>
-          
-          <TouchableOpacity onPress={() => navigation.navigate('page13' as never)}>
+
+          <TouchableOpacity
+            onPress={() => navigation.navigate("page13" as never)}
+          >
             <Ionicons name="calendar-outline" size={28} color="#000" />
           </TouchableOpacity>
-          
-          <TouchableOpacity onPress={() => navigation.navigate('page14' as never)}>
+
+          <TouchableOpacity
+            onPress={() => navigation.navigate("page14" as never)}
+          >
             <Ionicons name="person-outline" size={28} color="#000" />
           </TouchableOpacity>
         </View>
@@ -129,96 +168,86 @@ export default function Page6Screen() {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#ffffff',
+    backgroundColor: "#ffffff",
   },
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: "#FFFFFF",
     paddingHorizontal: 20,
   },
-  // --- Header y Buscador ---
   headerContainer: {
     marginTop: 40,
     marginBottom: 20,
   },
   searchBar: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#F5f5f5', // Un gris muy suave para el fondo del input
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#F5f5f5",
     borderRadius: 8,
     paddingHorizontal: 12,
     height: 40,
-    // Si prefieres borde como en el login, descomenta abajo:
-    // borderWidth: 1,
-    // borderColor: '#8AD2EA', 
   },
   searchIcon: {
     marginRight: 10,
-    fontSize:25,
-    color:'#828282',
-
+    fontSize: 25,
+    color: "#828282",
   },
   searchInput: {
     flex: 1,
     fontSize: 18,
-    color: '#023554',
+    color: "#023554",
   },
-
-  // --- Filtros ---
   filterSection: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     marginBottom: 20,
-    flexWrap: 'wrap', // Por si el texto es muy largo
+    flexWrap: "wrap",
   },
   sectionTitle: {
-    fontSize: 18, // Ligeramente más pequeño que el login title para encajar
-    fontWeight: '700',
-    color: '#023554', // Color principal del login
+    fontSize: 18,
+    fontWeight: "700",
+    color: "#023554",
   },
   tagsContainer: {
-    flexDirection: 'row',
+    flexDirection: "row",
     gap: 10,
   },
   tagButton: {
-    backgroundColor: '#8AD2EA', // Color secundario del login
+    backgroundColor: "#8AD2EA",
     paddingVertical: 6,
     paddingHorizontal: 12,
     borderRadius: 8,
-    borderColor:'#023554',
-    borderWidth:2,
+    borderColor: "#023554",
+    borderWidth: 2,
   },
   tagText: {
-    color: '#023554', // Texto oscuro sobre fondo claro
+    color: "#023554",
     fontSize: 17,
-    fontWeight: '700',
-    marginTop:-2,
+    fontWeight: "700",
+    marginTop: -2,
   },
-
-  // --- Grid / Cards ---
   listContent: {
-    paddingBottom: 80, // Espacio para que el nav no tape el contenido
+    paddingBottom: 80,
   },
   row: {
-    justifyContent: 'space-between',
+    justifyContent: "space-between",
     marginBottom: 20,
   },
   cardContainer: {
-    width: '47%', // Casi la mitad para dejar espacio en medio
+    width: "47%",
   },
   cardImageContainer: {
-    width: '100%',
-    aspectRatio: 1, // Hace que sea cuadrado
-    backgroundColor: '#FFFFFF',
+    width: "100%",
+    aspectRatio: 1,
+    backgroundColor: "#FFFFFF",
     borderRadius: 4,
     borderWidth: 1,
-    borderColor: '#D0D0D0', // Gris suave del login
-    justifyContent: 'center',
-    alignItems: 'center',
+    borderColor: "#D0D0D0",
+    justifyContent: "center",
+    alignItems: "center",
     marginBottom: 8,
-    overflow: 'hidden',
-    // Sombra suave opcional
+    overflow: "hidden",
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.1,
@@ -226,39 +255,31 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   cardImage: {
-    width: '80%',
-    height: '80%',
+    width: "80%",
+    height: "80%",
   },
   cardLocation: {
     fontSize: 12,
-    color: '#888', // Gris footer del login
+    color: "#888",
     marginBottom: 2,
   },
   cardTitle: {
     fontSize: 14,
-    fontWeight: '600',
-    color: '#023554',
+    fontWeight: "600",
+    color: "#023554",
   },
-
-  // --- Bottom Navigation ---
-  // ... resto de los estilos
-
   bottomNav: {
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        alignItems: 'center',
-        height: 70,
-        borderTopWidth: 1,
-        borderTopColor: '#eee',
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        right: 0,
-        backgroundColor: '#fff',
-        paddingBottom: 10, // Para iOS SafeArea inferior
-    },
-    navItem: {
-        padding: 10,
-    },
-  
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+    height: 70,
+    borderTopWidth: 1,
+    borderTopColor: "#eee",
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: "#fff",
+    paddingBottom: 10,
+  },
 });

@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   Image,
   ScrollView,
@@ -11,8 +11,12 @@ import {
   View,
 } from "react-native";
 import API from "../../constants/api";
+import { UserContext } from "../../context/UserContext";
+
 export default function LoginScreen() {
   const router = useRouter();
+  const { setUsuario } = useContext(UserContext);
+
   const [correo, setCorreo] = useState("");
   const [contrasena, setContrasena] = useState("");
 
@@ -30,10 +34,10 @@ export default function LoginScreen() {
 
       if (response.data.success && response.data.usuario) {
         const usuario = response.data.usuario;
-        await AsyncStorage.setItem(
-          "usuario",
-          JSON.stringify(response.data.usuario)
-        );
+        await AsyncStorage.setItem("usuario", JSON.stringify(usuario));
+
+        // Actualizar el contexto global
+        setUsuario(usuario);
 
         alert(response.data.message || "Inicio de sesión exitoso");
         //redirigir segun el rol
@@ -54,11 +58,6 @@ export default function LoginScreen() {
       alert(mensajeError);
       console.log("ERROR LOGIN:", mensajeError);
     }
-  };
-
-  const handleRegister = () => {
-    console.log("Ir a registro");
-    // navigation.navigate('Register');
   };
 
   return (
